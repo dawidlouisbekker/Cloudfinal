@@ -1,0 +1,7 @@
+chromadb
+Flask
+Flask-Session
+pycryptodome
+psycopg2-binary
+Flask-SQLAlchemy
+pymongo
