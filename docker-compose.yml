@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  web:
+    build: ./app
+    ports:
+      - "5000:5000"
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: flask_db
+      POSTGRES_USER: flask_user
+      POSTGRES_PASSWORD: flask_password
+      MONGO_HOST: mongo
+      MONGO_PORT: 27017
+    depends_on:
+      - db
+      - mongo
+
+  db:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: flask_db
+      POSTGRES_USER: flask_user
+      POSTGRES_PASSWORD: flask_password
+    volumes:
+      - postgres_data3:/var/lib/postgresql/data
+
+  chroma:
+    image: chromadb/chroma
+    ports:
+      - "8000:8000"
+    volumes:
+      - chroma_data:/var/lib/chroma/data
+
+  mongo:
+    image: mongo:5
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: mongo_password
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  postgres_data3:
+  mongo_data:
+  chroma_data:
+
+
